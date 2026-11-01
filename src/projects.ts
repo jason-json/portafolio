@@ -1,6 +1,14 @@
 export const projects = {
   "/work/scheduling-optimization": {
     title: "Scheduling Optimization",
+    art: "calendar",
+    card: {
+      label: "QAT GLOBAL",
+      discipline: "01 / FRONTEND ENGINEERING",
+      description:
+        "Owning the frontend for appointment scheduling across locations, time zones, availability, and user permissions.",
+      tags: ["Complex interfaces", "Frontend development"],
+    },
     headline: ["Scheduling", "Optimization."],
     label: "QAT GLOBAL / PROFESSIONAL WORK / 01",
     summary:
@@ -45,6 +53,14 @@ export const projects = {
   },
   "/work/live-trace-explorer": {
     title: "Live Trace Explorer",
+    art: "graph",
+    card: {
+      label: "LIVE TRACE EXPLORER",
+      discipline: "02 / TECHNICAL LEADERSHIP",
+      description:
+        "Leading frontend architecture and team delivery for an interactive graph of project relationships, status, and progress.",
+      tags: ["Graph visualization", "Team leadership"],
+    },
     headline: ["Live Trace", "Explorer."],
     label: "PROFESSIONAL WORK / TECHNICAL LEADERSHIP / 02",
     summary:
@@ -89,3 +105,5 @@ export const projects = {
   },
 } as const;
 export type ProjectPath = keyof typeof projects;
+
+export type ProjectDetails = (typeof projects)[ProjectPath];
