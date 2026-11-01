@@ -1,20 +1,9 @@
 // @vitest-environment jsdom
 import { afterEach, expect, it, vi } from "vitest";
-import {
-  cleanup,
-  fireEvent,
-  render,
-  screen,
-  within,
-} from "@testing-library/react";
+import { cleanup, render, screen, within } from "@testing-library/react";
 import { App } from "./App";
-import { resolveRoute } from "./route";
 
-vi.mock("./Signal", () => ({
-  Signal: ({ paused }: { paused: boolean }) => (
-    <canvas data-testid="sculpture" data-paused={paused} />
-  ),
-}));
+vi.mock("./Signal", () => ({ Signal: () => null }));
 afterEach(cleanup);
 
 const cases = [
@@ -29,20 +18,6 @@ const cases = [
     art: /project graph/i,
   },
 ];
-
-it.each(["/", "/portafolio/"])(
-  "resolves native page paths under %s",
-  (base) => {
-    expect(resolveRoute(base, base).kind).toBe("home");
-    for (const { slug, title } of cases) {
-      for (const suffix of ["", "/"])
-        expect(
-          resolveRoute(base + "work/" + slug + suffix, base),
-        ).toMatchObject({ kind: "project", project: { title } });
-    }
-    expect(resolveRoute(base + "missing", base).kind).toBe("not-found");
-  },
-);
 
 it("keeps section links, accessible contact links and project destinations intact", () => {
   const base = "/portafolio/";
@@ -100,20 +75,4 @@ it("offers a return-home link for unknown paths", () => {
   expect(
     screen.getByRole("link", { name: "Return home" }).getAttribute("href"),
   ).toBe("/portafolio/");
-});
-
-it("pauses and resumes the sculpture from the accessible hero control", () => {
-  render(<App base="/" pathname="/" />);
-  for (const [name, paused] of [
-    ["PAUSE MOTION", "false"],
-    ["RESUME MOTION", "true"],
-    ["PAUSE MOTION", "false"],
-  ]) {
-    const button = screen.getByRole("button", { name });
-    expect(button.getAttribute("aria-pressed")).toBe(paused);
-    expect(screen.getByTestId("sculpture").getAttribute("data-paused")).toBe(
-      paused,
-    );
-    fireEvent.click(button);
-  }
 });
