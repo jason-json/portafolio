@@ -1,3 +1,4 @@
+import { Arrow } from "./Arrow";
 import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { animate, inView } from "motion";
 import { drawSculpture } from "./Signal";
@@ -6,7 +7,7 @@ const SESSION_KEY = "signal-structure:intro-seen";
 const ease = [0.22, 1, 0.36, 1] as const;
 function shouldIntroduce() {
   if (
-    location.pathname !== "/" ||
+    location.pathname !== import.meta.env.BASE_URL ||
     location.hash ||
     window.scrollY > 0 ||
     matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -295,7 +296,7 @@ export function MotionExperience({ children }: { children: ReactNode }) {
             SIGNAL / STRUCTURE <span>FROM COMPLEXITY TO CLARITY</span>
           </div>
           <button className="skip-intro" onClick={() => finishRef.current()}>
-            Skip intro <span aria-hidden="true">↗</span>
+            Skip intro <Arrow />
           </button>
         </div>
       )}

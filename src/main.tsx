@@ -1,3 +1,4 @@
+import { Arrow } from "./Arrow";
 import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
 import { Signal } from "./Signal";
@@ -8,18 +9,17 @@ import { projects, type ProjectPath } from "./projects";
 const profile = {
   email: "jasonfigueroa.json@gmail.com",
 };
-const projectPath = window.location.pathname.replace(/\/$/, "") as ProjectPath;
+const base = import.meta.env.BASE_URL;
+const pathname = "/" + window.location.pathname.slice(base.length);
+const projectPath = pathname.replace(/\/$/, "") as ProjectPath;
 const project = Object.hasOwn(projects, projectPath)
   ? projects[projectPath]
   : undefined;
-const isHome = window.location.pathname === "/";
-function Arrow({ diagonal = false }: { diagonal?: boolean }) {
-  return <span aria-hidden="true">{diagonal ? "↗" : "↗"}</span>;
-}
+const isHome = pathname === "/";
 function Header() {
   return (
     <header className="header">
-      <a className="brand" href="/" aria-label="Portfolio home">
+      <a className="brand" href={base} aria-label="Portfolio home">
         <span className="brand-symbol" aria-hidden="true">
           ✳
         </span>
@@ -30,8 +30,8 @@ function Header() {
         </span>
       </a>
       <nav aria-label="Main navigation">
-        <a href="/#work">Work</a>
-        <a href="/#about">About</a>
+        <a href={base + "#work"}>Work</a>
+        <a href={base + "#about"}>About</a>
         <a href="#contact" className="nav-contact">
           Let’s talk <Arrow />
         </a>
@@ -258,7 +258,7 @@ function Home() {
         <div className="project-grid">
           <article className="project">
             <a
-              href="/work/scheduling-optimization"
+              href={base + "work/scheduling-optimization"}
               className="project-art-link"
               aria-label="Read Scheduling Optimization case study"
             >
@@ -271,7 +271,7 @@ function Home() {
               <span>QAT GLOBAL</span>
               <span>01 / FRONTEND ENGINEERING</span>
             </div>
-            <a className="project-title" href="/work/scheduling-optimization">
+            <a className="project-title" href={base + "work/scheduling-optimization"}>
               <h3>Scheduling Optimization</h3>
               <Arrow />
             </a>
@@ -286,7 +286,7 @@ function Home() {
           </article>
           <article className="project">
             <a
-              href="/work/live-trace-explorer"
+              href={base + "work/live-trace-explorer"}
               className="project-art-link"
               aria-label="Read Live Trace Explorer case study"
             >
@@ -299,7 +299,7 @@ function Home() {
               <span>LIVE TRACE EXPLORER</span>
               <span>02 / TECHNICAL LEADERSHIP</span>
             </div>
-            <a className="project-title" href="/work/live-trace-explorer">
+            <a className="project-title" href={base + "work/live-trace-explorer"}>
               <h3>Live Trace Explorer</h3>
               <Arrow />
             </a>
@@ -423,7 +423,7 @@ function Project({ details }: { details: (typeof projects)[ProjectPath] }) {
   return (
     <>
       <section className="case-hero section">
-        <a className="back-link" href="/#work">
+        <a className="back-link" href={base + "#work"}>
           ← SELECTED WORK
         </a>
         <div className="eyebrow">{details.label}</div>
@@ -470,7 +470,7 @@ function Project({ details }: { details: (typeof projects)[ProjectPath] }) {
         </div>
       </section>
       <div className="section return-work">
-        <a className="text-link" href="/#work">
+        <a className="text-link" href={base + "#work"}>
           ← Back to selected work
         </a>
       </div>
@@ -494,8 +494,8 @@ function App() {
         ) : (
           <section className="section not-found">
             <h1>Page not found.</h1>
-            <a className="primary-link" href="/">
-              Return home ↗
+            <a className="primary-link" href={base}>
+              Return home <Arrow />
             </a>
           </section>
         )}

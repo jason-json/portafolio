@@ -1271,3 +1271,10 @@ nav a:hover,
     letter-spacing: 0.5px;
   }
 }
+
+.arrow-icon {
+  display: inline-block;
+  flex: none;
+  line-height: 0;
+  vertical-align: -0.1em;
+}
