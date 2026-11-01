@@ -19,7 +19,7 @@ A dark, architectural portfolio for a senior full-stack developer and technical 
 - One canvas wire sculpture in the hero. No animation framework or WebGL dependency.
 - Pointer interaction subtly changes its orientation. Motion pauses outside the viewport and in hidden tabs. A visible pause control is provided.
 - Respect prefers-reduced-motion: render a static sculpture and disable smooth scrolling/transitions.
-- Project visuals explain the work: a scheduling interface study and a data-convergence diagram. Both are explicitly illustrative, not original product screenshots.
+- Project visuals explain the work: a scheduling interface study and a project traceability graph with labeled sample data. Both are explicitly illustrative, not original product screenshots.
 - Never add imitation client logos, fabricated performance metrics, testimonials, or confidential screenshots.
 
 ## Content
@@ -29,7 +29,7 @@ A dark, architectural portfolio for a senior full-stack developer and technical 
 - Use supplied career facts; distinguish role dates from project dates.
 - Identity: Jason Figueroa. Use “Email me” as the visible label for the mailto contact link. The address is still available in the HTML; this is not a privacy mechanism.
 - No résumé link until a résumé is supplied.
-- LinkedIn uses the public profile root from the user's supplied LinkedIn URLs.
+- Contact uses email only, at jasonfigueroa.json@gmail.com.
 - Keep incomplete technical decisions visibly labeled. Never fill missing project facts with plausible guesses.
 
 ## Accessibility and maintenance
@@ -37,7 +37,7 @@ A dark, architectural portfolio for a senior full-stack developer and technical 
 - Semantic landmarks and headings, skip link, visible focus, native links and buttons.
 - Decorative canvas is hidden from assistive technology; meaningful diagrams have accessible descriptions.
 - Check both pages at narrow mobile and desktop sizes after changing layout.
-- Content lives in src/main.tsx; reusable canvas in src/Signal.tsx; shared visual rules in src/style.css.
+- Page layout lives in src/main.tsx and case-study content in src/projects.ts; reusable canvas in src/Signal.tsx; shared visual rules in src/style.css.
 - New project pages should reuse Header, Footer, case layout, and these tokens.
 
 ## Motion choreography

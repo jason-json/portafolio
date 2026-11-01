@@ -1,6 +1,6 @@
 # Signal / Structure portfolio
 
-React + TypeScript + Vite. Homepage and representative Scheduling Optimization case study.
+React + TypeScript + Vite. Homepage and Scheduling Optimization and Live Trace Explorer case studies.
 
 ## Development
 
@@ -18,16 +18,17 @@ npm run build
 npm run preview
 ```
 
-Publish the `dist` directory on a static host configured to rewrite application paths to `index.html` (including `/work/scheduling-optimization`). This implementation uses native URL navigation with a small pathname switch; adding a router is optional as the site grows.
+Publish the `dist` directory on a static host configured to rewrite application paths to `index.html` (including `/work/scheduling-optimization` and `/work/live-trace-explorer`). This implementation uses native URL navigation with a small pathname switch; adding a router is optional as the site grows.
 
 ## Content to complete
 
 - No résumé supplied; omit the résumé link until one is available.
 - Confirm role dates and public-sharing permission for project details.
-- Add Scheduling Optimization's exact stack, personal ownership, architecture decisions, and substantiated results.
+- Add exact project stacks and concrete implementation techniques if available. Both case studies now include supplied ownership, architecture responsibilities, and qualitative outcomes.
+- Confirm Live Trace Explorer’s employer and project dates before adding those details.
 - Replace illustrative concepts with approved product imagery if available.
 
-LinkedIn is derived from the public profile root in the supplied experience URLs. No project metrics, client testimonials, or specific project stack have been invented.
+No project metrics, client testimonials, or specific project stack have been invented.
 
 See DESIGN.md for typography, colors, spacing, motion, accessibility, and content rules.
 

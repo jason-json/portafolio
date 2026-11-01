@@ -1250,3 +1250,24 @@ nav a:hover,
     height: 295px;
   }
 }
+.trace-art.large {
+  height: 530px;
+}
+.trace-art.large svg {
+  padding: 30px 8% 45px;
+}
+.case-summary {
+  max-width: 650px;
+}
+@media (max-width: 600px) {
+  .trace-art.large {
+    height: 300px;
+  }
+  .trace-art.large svg {
+    padding: 5px 0 20px;
+  }
+  .trace-art .art-caption {
+    font-size: 6px;
+    letter-spacing: 0.5px;
+  }
+}

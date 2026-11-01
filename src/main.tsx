@@ -3,14 +3,15 @@ import { createRoot } from "react-dom/client";
 import { Signal } from "./Signal";
 import { MotionExperience } from "./MotionExperience";
 import "./style.css";
+import { projects, type ProjectPath } from "./projects";
 
 const profile = {
-  linkedin: "https://www.linkedin.com/in/jsonfigueroa/",
-  email: "fjason047@gmail.com",
+  email: "jasonfigueroa.json@gmail.com",
 };
-const isProject =
-  window.location.pathname.replace(/\/$/, "") ===
-  "/work/scheduling-optimization";
+const projectPath = window.location.pathname.replace(/\/$/, "") as ProjectPath;
+const project = Object.hasOwn(projects, projectPath)
+  ? projects[projectPath]
+  : undefined;
 const isHome = window.location.pathname === "/";
 function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return <span aria-hidden="true">{diagonal ? "↗" : "↗"}</span>;
@@ -65,14 +66,6 @@ function Footer() {
             <br />
             or the problem you’re trying to solve.
           </p>
-          <a
-            className="text-link"
-            href={profile.linkedin}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Connect on LinkedIn <Arrow />
-          </a>
         </div>
         <a className="text-link email-link" href={`mailto:${profile.email}`}>
           Email me <Arrow />
@@ -131,51 +124,74 @@ function ScheduleArt({ large = false }: { large?: boolean }) {
     </div>
   );
 }
-function DataArt() {
+function TraceArt({ large = false }: { large?: boolean }) {
+  const nodes = [
+    {
+      x: 28,
+      y: 112,
+      title: "Project item",
+      status: "In progress",
+      progress: 68,
+    },
+    { x: 193, y: 40, title: "Related item", status: "Complete", progress: 100 },
+    { x: 193, y: 184, title: "Related item", status: "Review", progress: 42 },
+    { x: 358, y: 112, title: "Test item", status: "In progress", progress: 75 },
+  ];
   return (
     <div
-      className="data-art"
+      className={`data-art trace-art ${large ? "large" : ""}`}
       role="img"
-      aria-label="Conceptual diagram of multiple data sources converging into a single interface"
+      aria-label="Illustrative project graph with connected item cards, a dashed suspect relationship, statuses, and sample progress percentages."
     >
       <div className="data-grid" />
       <svg viewBox="0 0 500 300" aria-hidden="true">
-        <g fill="none" stroke="#78846b" strokeWidth="1">
-          <path d="M70 65 H170 Q200 65 200 95 V130 Q200 150 240 150 H350" />
-          <path d="M70 150 H350" />
-          <path d="M70 235 H170 Q200 235 200 205 V170 Q200 150 240 150" />
+        <g fill="none" stroke="#91a77b" strokeWidth="1">
+          <path d="M142 150 C170 150 165 78 193 78 M142 150 C170 150 165 222 193 222 M307 78 C335 78 330 150 358 150" />
+          <path
+            d="M307 222 C335 222 330 150 358 150"
+            stroke="#d4bc83"
+            strokeDasharray="4 4"
+          />
         </g>
-        {[65, 150, 235].map((y) => (
-          <g key={y}>
+        {nodes.map((node) => (
+          <g key={node.title + node.y}>
             <rect
-              x="49"
-              y={y - 18}
-              width="42"
-              height="36"
-              rx="3"
-              fill="#232920"
-              stroke="#5c6850"
+              x={node.x}
+              y={node.y}
+              width="114"
+              height="76"
+              rx="4"
+              fill="#20291b"
+              stroke="#637851"
             />
-            <path d={`M60 ${y - 4} H80 M60 ${y + 4} H75`} stroke="#bac9a4" />
+            <text x={node.x + 10} y={node.y + 18} fill="#ecf0e5" fontSize="10">
+              {node.title}
+            </text>
+            <text x={node.x + 10} y={node.y + 34} fill="#b7c6a8" fontSize="8">
+              {node.status}
+            </text>
+            <rect
+              x={node.x + 10}
+              y={node.y + 47}
+              width="66"
+              height="3"
+              fill="#3e4c33"
+            />
+            <rect
+              x={node.x + 10}
+              y={node.y + 47}
+              width={(66 * node.progress) / 100}
+              height="3"
+              fill="#c5ed98"
+            />
+            <text x={node.x + 83} y={node.y + 51} fill="#c5ed98" fontSize="8">
+              {node.progress}%
+            </text>
           </g>
         ))}
-        <rect
-          x="335"
-          y="105"
-          width="100"
-          height="90"
-          rx="4"
-          fill="#20291b"
-          stroke="#bce88b"
-        />
-        <path
-          d="M350 125 H417 M350 139 H386 M350 169 V153 M363 169 V148 M376 169 V157 M389 169 V145 M402 169 V151 M415 169 V139"
-          stroke="#c5ee96"
-        />
-        <circle cx="245" cy="150" r="5" fill="#c5ee96" />
       </svg>
       <div className="art-caption">
-        MULTIPLE SOURCES. ONE CLEAR VIEW. / CONCEPT
+        ILLUSTRATIVE GRAPH · SAMPLE DATA · DASHED = SUSPECT LINK
       </div>
     </div>
   );
@@ -260,8 +276,8 @@ function Home() {
               <Arrow />
             </a>
             <p>
-              Making a complex calendar-management experience easier to navigate
-              through considered frontend development.
+              Owning the frontend for appointment scheduling across locations,
+              time zones, availability, and user permissions.
             </p>
             <div className="tags">
               <span>Complex interfaces</span>
@@ -269,18 +285,30 @@ function Home() {
             </div>
           </article>
           <article className="project">
-            <DataArt />
+            <a
+              href="/work/live-trace-explorer"
+              className="project-art-link"
+              aria-label="Read Live Trace Explorer case study"
+            >
+              <TraceArt />
+              <span className="art-open">
+                <Arrow />
+              </span>
+            </a>
             <div className="project-meta">
-              <span>QAT GLOBAL</span>
+              <span>LIVE TRACE EXPLORER</span>
               <span>02 / TECHNICAL LEADERSHIP</span>
             </div>
-            <h3 className="plain-title">Connecting data. Aligning teams.</h3>
+            <a className="project-title" href="/work/live-trace-explorer">
+              <h3>Live Trace Explorer</h3>
+              <Arrow />
+            </a>
             <p>
-              Leading a team developing features that bring multiple data
-              sources into a dynamic user interface.
+              Leading frontend architecture and team delivery for an interactive
+              graph of project relationships, status, and progress.
             </p>
             <div className="tags">
-              <span>Data aggregation</span>
+              <span>Graph visualization</span>
               <span>Team leadership</span>
             </div>
           </article>
@@ -352,7 +380,7 @@ function Home() {
           <p>
             I enjoy finding practical ways through difficult requirements—and
             helping the people around me do the same. Today, that means guiding
-            development, reviewing code, and supporting a team at QAT Global.
+            development, reviewing code, and supporting a team.
           </p>
           <span className="location">↳ COSTA RICA</span>
         </div>
@@ -390,101 +418,55 @@ function Home() {
     </>
   );
 }
-function Project() {
+function Project({ details }: { details: (typeof projects)[ProjectPath] }) {
+  const isScheduling = details.title === "Scheduling Optimization";
   return (
     <>
       <section className="case-hero section">
         <a className="back-link" href="/#work">
           ← SELECTED WORK
         </a>
-        <div className="eyebrow">QAT GLOBAL / PROFESSIONAL WORK / 01</div>
+        <div className="eyebrow">{details.label}</div>
         <h1>
-          Scheduling
+          {details.headline[0]}
           <br />
-          <span className="serif">Optimization.</span>
+          <span className="serif">{details.headline[1]}</span>
         </h1>
-        <p className="case-summary">
-          Bringing clarity to a complex
-          <br />
-          calendar-management experience.
-        </p>
+        <p className="case-summary">{details.summary}</p>
         <div className="case-facts">
           <div>
             <span>ROLE</span>
-            <p>Senior Full-Stack Developer</p>
+            <p>{details.role}</p>
           </div>
           <div>
             <span>CONTRIBUTION</span>
-            <p>Frontend development</p>
+            <p>{details.contribution}</p>
           </div>
           <div>
             <span>CONTEXT</span>
-            <p>QAT Global · 2019–2023 role</p>
+            <p>{details.context}</p>
           </div>
         </div>
-        <ScheduleArt large />
+        {isScheduling ? <ScheduleArt large /> : <TraceArt large />}
       </section>
       <section className="case-body section">
         <aside>
-          <span className="eyebrow">CASE STUDY / IN PROGRESS</span>
-          <p>
-            A professional contribution.
-            <br />
-            An interface with complexity.
-          </p>
+          <span className="eyebrow">CASE STUDY / PROFESSIONAL WORK</span>
+          <p>{details.aside}</p>
           <a href="#contact" className="text-link">
             Discuss my experience <Arrow />
           </a>
         </aside>
         <div className="case-narrative">
-          <article>
-            <span className="eyebrow">01 / THE PROBLEM</span>
-            <h2>A calendar with more to solve.</h2>
-            <p>
-              Scheduling Optimization was a feature designed to streamline
-              calendar management. Its complex UX and UI made frontend
-              development a central part of the challenge.
-            </p>
-          </article>
-          <article>
-            <span className="eyebrow">02 / MY CONTRIBUTION</span>
-            <h2>Turning requirements into an interface.</h2>
-            <p>
-              As a Senior Full-Stack Developer at QAT Global, I contributed
-              technical expertise to the design and development of this
-              solution, including work on its frontend.
-            </p>
-            <p>
-              My broader role involved working with application owners
-              throughout development, adapting to changing teams and
-              requirements, and resolving critical issues.
-            </p>
-          </article>
-          <article>
-            <span className="eyebrow">03 / TECHNICAL DECISIONS</span>
-            <h2>The reasoning deserves detail.</h2>
-            <div className="content-placeholder">
-              <span>CONTENT PENDING</span>
-              <p>
-                Specific architecture choices, scheduling constraints, and the
-                project’s technology stack still need to be documented. These
-                details will explain the tradeoffs behind the implementation.
-              </p>
-            </div>
-          </article>
-          <article>
-            <span className="eyebrow">04 / THE OUTCOME</span>
-            <h2>A positive client response.</h2>
-            <p>
-              In my account of the project, the client responded positively to
-              the speed and quality of the frontend work.
-            </p>
-            <p className="muted">
-              Quantitative results and public product screenshots have not been
-              supplied. The calendar visual above is an illustrative concept,
-              not a screenshot of the original application.
-            </p>
-          </article>
+          {details.sections.map((section) => (
+            <article key={section.label}>
+              <span className="eyebrow">{section.label}</span>
+              <h2>{section.title}</h2>
+              {section.paragraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </article>
+          ))}
         </div>
       </section>
       <div className="section return-work">
@@ -505,8 +487,8 @@ function App() {
       <div id="top" />
       <Header />
       <main id="main">
-        {isProject ? (
-          <Project />
+        {project ? (
+          <Project details={project} />
         ) : isHome ? (
           <Home />
         ) : (
@@ -521,7 +503,7 @@ function App() {
     </>
   );
 }
-if (isProject) document.title = "Scheduling Optimization — Jason Figueroa";
+if (project) document.title = `${project.title} — Jason Figueroa`;
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <MotionExperience>
